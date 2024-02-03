@@ -32,7 +32,7 @@ public class TransactionController {
 	private TransactionRepository transactionRepository;
 	
 	
-	@GetMapping("/read")
+	@GetMapping
 	public ResponseEntity<List<Transaction>> getAll() {
 		return ResponseEntity.ok(transactionRepository.findAll());
 	}
@@ -50,7 +50,7 @@ public class TransactionController {
 		}
 	
 
-	@PutMapping("update/{id}")
+	@PutMapping("/update/{id}")
 	public ResponseEntity<Transaction> put(@Valid @RequestBody Transaction Transactions) {
 		if (transactionRepository.exists(Transactions.getId())) {
 				return ResponseEntity.status(HttpStatus.OK).body(transactionRepository.save(Transactions));
@@ -58,7 +58,7 @@ public class TransactionController {
 		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "person not found!", null);
 	}
 
-	@DeleteMapping("delete/{id}")
+	@DeleteMapping("/delete/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Long id) {
 		if (transactionRepository.existsById(id)) {
