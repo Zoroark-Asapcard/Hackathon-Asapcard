@@ -6,11 +6,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import com.zoroark.hackathonasapcard.service.TransactionService;
+
+@Component
 public class CsvReaderUtil {
 
+	 @Autowired
+	    private TransactionService transactionService;
+	 
     public static void readCSVFile(String filePath) {
         try {
             // Obtain the ClassLoader associated with the CsvReaderUtil class
@@ -56,10 +65,13 @@ public class CsvReaderUtil {
                 // Add the JSONObject to the JSONArray
                 jsonArray.put(jsonObject);
             }
-
+            
+//save transactions en db transactionservice.save
+            
+            
             // Print or handle JSON messages as needed
             System.out.println(jsonArray.toString(4));
-
+            
             bufferedReader.close();
         } catch (IOException e) {
             e.printStackTrace();

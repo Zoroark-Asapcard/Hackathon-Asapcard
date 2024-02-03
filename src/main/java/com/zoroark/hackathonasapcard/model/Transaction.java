@@ -28,6 +28,7 @@ public class Transaction {
 		this.id = id;
 		this.transactionDate = transactionDate;
 		this.amount = amount;
+		//this.status = 'P';
 	}
 
 	public Transaction() {	}
@@ -43,6 +44,10 @@ public class Transaction {
 	
 	@NotNull
 	private Double amount;
+	
+	//@Column(columnDefinition = "char(1) default 'P' not null")
+	//private char status; nivel_02
+
 	
 	@ManyToOne
 	@JsonIgnoreProperties("Transaction")
@@ -90,7 +95,15 @@ public class Transaction {
 
 	public void setInstallment(List<Installment> installment) {
 		this.installment = installment;
-	} 
+	}
+
+	/*public char getStatus() {
+		return status;
+	}
+
+	public void setStatus(char status) {
+		this.status = status;
+	} */
 	
 
 }
