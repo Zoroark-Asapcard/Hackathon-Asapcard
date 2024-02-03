@@ -42,7 +42,20 @@ public class PersonController {
 
     @PostMapping
     public ResponseEntity<Person> post(@Valid @RequestBody Person person) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(personRepository.save(person));
+    	// Checks if the ID is present and if it already exists in the database
+        if (person.getId() == null || !personRepository.existsById(person.getId())) {
+        	// If the ID does not exist, create a new record in the Person table
+            Person savedPerson = personRepository.save(person);
+            
+         // Returns the response with the object saved and status 201 (CREATED)
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedPerson);
+        }
+
+        // If the ID already exists, just update the existing record in the Person table
+        Person updatedPerson = personRepository.save(person);
+
+     // Returns the response with the updated object and status 200 (OK)
+        return ResponseEntity.ok(updatedPerson);
     }
 
     @PutMapping("/{id}")
