@@ -6,28 +6,35 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class CsvReaderUtil {
 
     public static void readCSVFile(String filePath) {
-        if (filePath == null || filePath.isEmpty()) {
-            System.err.println("File path cannot be null or empty");
-            return;
-        }
+        try {
+            // Obtain the ClassLoader associated with the CsvReaderUtil class
+            ClassLoader classLoader = CsvReaderUtil.class.getClassLoader();
+            // Get an InputStream for the specified file path using the ClassLoader
+            InputStream inputStream = classLoader.getResourceAsStream(filePath);
 
-        ClassLoader classLoader = CsvReaderUtil.class.getClassLoader();
-        try (InputStream inputStream = classLoader.getResourceAsStream(filePath);
-             InputStreamReader reader = new InputStreamReader(inputStream);
-             BufferedReader bufferedReader = new BufferedReader(reader)) {
+            if (inputStream == null) {
+                throw new FileNotFoundException("File not found: " + filePath);
+            }
+
+            // Create an InputStreamReader to read characters from the InputStream
+            InputStreamReader reader = new InputStreamReader(inputStream);
+            // Optionally, create a BufferedReader to improve reading performance
+            BufferedReader bufferedReader = new BufferedReader(reader);
+            
+            JSONArray jsonArray = new JSONArray();
 
             String line;
             while ((line = bufferedReader.readLine()) != null) {
+                // Split the line into fields using the ';' delimiter
                 StringTokenizer tokenizer = new StringTokenizer(line, ";");
-                if (tokenizer.countTokens() != 7) {
-                    System.err.println("Invalid CSV format: " + line);
-                    continue;
-                }
 
+                // Extract the fields from the line
                 String transactionId = tokenizer.nextToken();
                 String transactionDate = tokenizer.nextToken();
                 String document = tokenizer.nextToken();
@@ -36,23 +43,26 @@ public class CsvReaderUtil {
                 double transactionAmount = Double.parseDouble(tokenizer.nextToken());
                 int numberOfInstallments = Integer.parseInt(tokenizer.nextToken());
 
-                // Print the extracted fields
-                System.out.println("Transaction ID: " + transactionId);
-                System.out.println("Transaction Date: " + transactionDate);
-                System.out.println("Document: " + document);
-                System.out.println("Name: " + name);
-                System.out.println("Age: " + age);
-                System.out.println("Transaction Amount: " + transactionAmount);
-                System.out.println("Number of Installments: " + numberOfInstallments);
-                System.out.println();
+                // Create a JSONObject for each line
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("transactionId", transactionId);
+                jsonObject.put("transactionDate", transactionDate);
+                jsonObject.put("document", document);
+                jsonObject.put("name", name);
+                jsonObject.put("age", age);
+                jsonObject.put("transactionAmount", transactionAmount);
+                jsonObject.put("numberOfInstallments", numberOfInstallments);
+
+                // Add the JSONObject to the JSONArray
+                jsonArray.put(jsonObject);
             }
-        } catch (FileNotFoundException e) {
-            System.err.println("File not found: " + filePath);
+
+            // Print or handle JSON messages as needed
+            System.out.println(jsonArray.toString(4));
+
+            bufferedReader.close();
         } catch (IOException e) {
-            System.err.println("Error reading file: " + e.getMessage());
-        } catch (NumberFormatException e) {
-            System.err.println("Error parsing number: " + e.getMessage());
+            e.printStackTrace();
         }
     }
-
 }
