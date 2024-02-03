@@ -1,21 +1,15 @@
 package com.zoroark.hackathonasapcard.model;
 
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
-
-import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
@@ -23,6 +17,14 @@ import jakarta.validation.constraints.NotBlank;
 @Table(name = "tb_installment")
 
 public class Installment {
+
+	public Installment(UUID id, int installmentNumber, float value) {
+		this.id = id;
+		this.installmentNumber = installmentNumber;
+		this.value = value;
+	}
+
+	public Installment() {	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,13 +38,10 @@ public class Installment {
 	@Column(length = 1000)
 	@NotBlank(message = "The value attribute is mandatory")
 	private float value;
-
-	@UpdateTimestamp
-	private LocalDateTime data;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "transaction", cascade = CascadeType.REMOVE)
-	@JsonIgnoreProperties("transaction")	
-	private List<Transaction> transaction;
+	@ManyToOne
+	@JsonIgnoreProperties("installment")
+	private Transaction transaction;
 
 	public UUID getId() {
 		return id;
@@ -68,13 +67,14 @@ public class Installment {
 		this.value = value;
 	}
 
-	public LocalDateTime getData() {
-		return data;
+	public Transaction getTransaction() {
+		return transaction;
 	}
 
-	public void setData(LocalDateTime data) {
-		this.data = data;
+	public void setTransaction(Transaction transaction) {
+		this.transaction = transaction;
 	}
+	 
 	
 }
 

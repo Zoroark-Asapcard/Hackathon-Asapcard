@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -24,21 +23,23 @@ import jakarta.validation.constraints.NotNull;
 @Table(name = "tb_transaction")
 public class Transaction {
 	
+	public Transaction(UUID id, LocalDate transactionDate, Double amount) {
+		this.id = id;
+		this.transactionDate = transactionDate;
+		this.amount = amount;
+	}
+
+	public Transaction() {	}
+
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 	
-	@Id
-	@Column
-	private Long personId;
-	
 	@NotNull
-	@Column
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate transactionDate;
 	
 	@NotNull
-	@Column
 	private Double amount;
 	
 	@ManyToOne
@@ -55,14 +56,6 @@ public class Transaction {
 
 	public void setId(UUID id) {
 		this.id = id;
-	}
-
-	public Long getPersonId() {
-		return personId;
-	}
-
-	public void setPersonId(Long personId) {
-		this.personId = personId;
 	}
 
 	public LocalDate getTransactionDate() {
