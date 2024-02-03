@@ -12,8 +12,8 @@ public class HackathonasapcardApplication {
 		SpringApplication.run(HackathonasapcardApplication.class, args);
 		
 		// Teste da Leitura de Arquivo CSV
-		//String filePath = "input-data.csv";
-        //CsvReaderUtil.readCSVFile(filePath);
+		String filePath = "input-data.csv";
+        CsvReaderUtil.readCSVFile(filePath);
 	}
 
 }
