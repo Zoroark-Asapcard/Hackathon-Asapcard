@@ -44,7 +44,7 @@ public class InstallmentController {
 
 	@PutMapping("/update/{id}")
 	public ResponseEntity<Installment> put(@Valid @RequestBody Installment Transactions) {
-		if (installmentRepository.exists(Transactions.getId())) {
+		if (installmentRepository.existsById(Transactions.getId())) {
 			return ResponseEntity.status(HttpStatus.OK).body(installmentRepository.save(Transactions));
 		}
 		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "person not found!", null);
