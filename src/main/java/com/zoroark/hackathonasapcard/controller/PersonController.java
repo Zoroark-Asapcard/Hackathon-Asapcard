@@ -1,4 +1,4 @@
-package controller;
+package com.zoroark.hackathonasapcard.controller;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,9 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.zoroark.hackathonasapcard.model.Person;
+import com.zoroark.hackathonasapcard.repository.PersonRepository;
+
 import jakarta.validation.Valid;
-import model.Person;
-import repository.PersonRepository;
 
 @RequestMapping("/persons")
 @CrossOrigin(origins = "*", allowedHeaders = "*")

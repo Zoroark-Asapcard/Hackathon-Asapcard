@@ -1,11 +1,11 @@
-package repository;
+package com.zoroark.hackathonasapcard.repository;
 
 import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import model.Person;
+import com.zoroark.hackathonasapcard.model.Person;
 
 public interface PersonRepository extends JpaRepository<Person, UUID>{
 	
