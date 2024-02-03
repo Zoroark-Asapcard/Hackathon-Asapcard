@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 
 import jakarta.persistence.CascadeType;
@@ -15,7 +16,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
@@ -40,9 +41,9 @@ public class Installment {
 	@UpdateTimestamp
 	private LocalDateTime data;
 	
-	//*@OneToMany(fetch = FetchType.LAZY, mappedBy = "transaction", cascade = CascadeType.REMOVE)
-	 //*@JsonIgnoreProperties("transaction")	
-	//*private List<Transaction> transaction; //*AGUARDANDO MODEL TRANSACTION 
+	@ManyToOne(fetch = FetchType.LAZY, mappedBy = "transaction", cascade = CascadeType.REMOVE)
+	 @JsonIgnoreProperties("transaction")	
+	private List<Transaction> transaction; //*AGUARDANDO MODEL TRANSACTION 
 
 	public UUID getId() {
 		return id;
