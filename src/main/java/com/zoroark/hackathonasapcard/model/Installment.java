@@ -11,7 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "tb_installment")
@@ -28,15 +28,15 @@ public class Installment {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(columnDefinition = "varchar(36)")
+	@Column
 	private UUID id;
 
 	@Column(length = 1000)
-	@NotBlank(message = "The number of installments is mandatory.")
+	@NotNull(message = "The number of installments is mandatory.")
 	private int installmentNumber;
 
 	@Column(length = 1000)
-	@NotBlank(message = "The value attribute is mandatory")
+	@NotNull(message = "The value attribute is mandatory")
 	private float value;
 	
 	@ManyToOne
