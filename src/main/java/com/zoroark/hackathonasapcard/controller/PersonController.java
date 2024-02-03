@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.zoroark.hackathonasapcard.model.Person;
@@ -22,6 +23,7 @@ import com.zoroark.hackathonasapcard.repository.PersonRepository;
 
 import jakarta.validation.Valid;
 
+@RestController
 @RequestMapping("/persons")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PersonController {
