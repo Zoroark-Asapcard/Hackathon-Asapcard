@@ -32,7 +32,8 @@ public class Person {
 	public Person() {	}
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(columnDefinition = "varchar(36)")
     private UUID id;
     
 	@NotBlank
