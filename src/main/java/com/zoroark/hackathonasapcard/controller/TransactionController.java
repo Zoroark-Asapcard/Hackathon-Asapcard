@@ -1,6 +1,8 @@
 package com.zoroark.hackathonasapcard.controller;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -26,12 +27,10 @@ import jakarta.validation.Valid;
 @RequestMapping("/transactions")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class TransactionController {
-	
 
 	@Autowired
 	private TransactionRepository transactionRepository;
-	
-	
+
 	@GetMapping
 	public ResponseEntity<List<Transaction>> getAll() {
 		return ResponseEntity.ok(transactionRepository.findAll());
@@ -42,33 +41,29 @@ public class TransactionController {
 		return transactionRepository.findById(id).map(resposta -> ResponseEntity.ok(resposta))
 				.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 	}
-	
+
 	@PostMapping("/create")
 	public ResponseEntity<Transaction> post(@Valid @RequestBody Transaction Transactions) {
-		
-			return ResponseEntity.status(HttpStatus.CREATED).body(transactionRepository.save(Transactions));
-		}
-	
+
+		return ResponseEntity.status(HttpStatus.CREATED).body(transactionRepository.save(Transactions));
+	}
 
 	@PutMapping("/update/{id}")
 	public ResponseEntity<Transaction> put(@Valid @RequestBody Transaction Transactions) {
 		if (transactionRepository.exists(Transactions.getId())) {
-				return ResponseEntity.status(HttpStatus.OK).body(transactionRepository.save(Transactions));
-				}
+			return ResponseEntity.status(HttpStatus.OK).body(transactionRepository.save(Transactions));
+		}
 		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "person not found!", null);
 	}
 
 	@DeleteMapping("/delete/{id}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void delete(@PathVariable Long id) {
-		if (transactionRepository.existsById(id)) {
-			transactionRepository.deleteById(id);
-		} else {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "person not found!", null);
+	public void delete(@PathVariable UUID id) {
+		Optional<Transaction> transaction = transactionRepository.findById(id);
 
-		}
+		if (transaction.isEmpty())
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
+		transactionRepository.deleteById(id);
 	}
 
 }
-
-
