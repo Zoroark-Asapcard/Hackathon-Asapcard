@@ -1,12 +1,18 @@
 
 # Hackathon Asapcard
 ## Grupo Zoroark
+![Logo](https://i.imgur.com/M5zI5FD.png)
 
 ## Desafios:
 - Nível 1: Integração entre camadas
+  O Desafio consistiu em criar uma aplicação capaz de receber um input de um arquivo .csv e gerar um output no formato JSON, persistindo esses dados em um banco de dados relacional. Construímos a aplicação em maven com o framework Spring boot e o SGDB MYSQL para persistir os dados. 
 - Nível 2: Evolução do negócio
+  Esse desafio se baseou em validar os dados persistido a partir de um segundo arquivo .csv, conciliando os dados e criando a funcionalidade de status para validar os dados das transações.
 - Nível 3: Aplicação 24/7
+  O nível 3 exigiu modificações na aplicação para que ela execute 24/7, observando alterações no direrótio de input, validado e persistí-lo no banco de dados.
 - Nível 4: Criação de Container
+  No nível 4 o desafio foi executar todas as aplicações criadas com Docker usando rabbitmq com o docker compose.
+  
 ## Autores
 
 - [@alineconchetta] (https://github.com/AlineConchetta)
@@ -22,7 +28,7 @@
 
 ## Documentação
 
-[Documentação](https://)
+[Documentação](https://github.com/Zoroark-Asapcard/Documentacao)
 
 ## Stack utilizada
 
