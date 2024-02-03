@@ -4,15 +4,16 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.zoroark.hackathonasapcard.model.Installment;
+import org.springframework.data.repository.query.Param;
 
+import com.zoroark.hackathonasapcard.model.Installment;
 
 public interface InstallmentRepository extends JpaRepository<Installment, UUID> {
 
-		Optional<Installment> findById(UUID id);
-        public boolean exists(UUID id);
+	boolean existsById(@Param("id") UUID id);
 
+	Optional<Installment> findById(UUID id);
 
+	
 
 }
-

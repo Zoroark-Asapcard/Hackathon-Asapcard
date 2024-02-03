@@ -47,7 +47,7 @@ public class PersonController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Person> put(@PathVariable UUID id, @Valid @RequestBody Person updatedPerson) {
-        if (personRepository.exists(id)) {
+        if (personRepository.existsById(id)) {
             updatedPerson.setId(id);
             return ResponseEntity.status(HttpStatus.OK).body(personRepository.save(updatedPerson));
         }
@@ -57,7 +57,7 @@ public class PersonController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable UUID id) {
-        if (personRepository.exists(id)) {
+        if (personRepository.existsById(id)) {
             personRepository.deleteById(id);
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);

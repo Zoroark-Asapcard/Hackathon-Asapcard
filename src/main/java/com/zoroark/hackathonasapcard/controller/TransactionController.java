@@ -50,7 +50,7 @@ public class TransactionController {
 
 	@PutMapping("/update/{id}")
 	public ResponseEntity<Transaction> put(@Valid @RequestBody Transaction Transactions) {
-		if (transactionRepository.exists(Transactions.getId())) {
+		if (transactionRepository.existsById(Transactions.getId())) {
 			return ResponseEntity.status(HttpStatus.OK).body(transactionRepository.save(Transactions));
 		}
 		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "person not found!", null);
