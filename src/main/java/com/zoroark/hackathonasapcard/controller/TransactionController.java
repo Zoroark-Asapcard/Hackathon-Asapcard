@@ -1,8 +1,6 @@
 package com.zoroark.hackathonasapcard.controller;
 
 import java.util.List;
-import java.util.Optional;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,13 +28,12 @@ import jakarta.validation.Valid;
 public class TransactionController {
 	
 
-
 	@Autowired
 	private TransactionRepository transactionRepository;
 	
 	
-	@GetMapping
-	public ResponseEntity<List<Transaction>> getALL() {
+	@GetMapping("/read")
+	public ResponseEntity<List<Transaction>> getAll() {
 		return ResponseEntity.ok(transactionRepository.findAll());
 	}
 
@@ -46,28 +43,28 @@ public class TransactionController {
 				.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 	}
 	
-	@PostMapping
+	@PostMapping("/create")
 	public ResponseEntity<Transaction> post(@Valid @RequestBody Transaction Transactions) {
 		
 			return ResponseEntity.status(HttpStatus.CREATED).body(transactionRepository.save(Transactions));
 		}
 	
 
-	@PutMapping
+	@PutMapping("update/{id}")
 	public ResponseEntity<Transaction> put(@Valid @RequestBody Transaction Transactions) {
-		if (transactionRepository.existsById(Transactions.getId())) {
+		if (transactionRepository.exists(Transactions.getId())) {
 				return ResponseEntity.status(HttpStatus.OK).body(transactionRepository.save(Transactions));
 				}
 		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "person not found!", null);
 	}
 
-	@DeleteMapping("/{id}")
+	@DeleteMapping("delete/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Long id) {
 		if (transactionRepository.existsById(id)) {
 			transactionRepository.deleteById(id);
 		} else {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "person not found!", null);
 
 		}
 	}

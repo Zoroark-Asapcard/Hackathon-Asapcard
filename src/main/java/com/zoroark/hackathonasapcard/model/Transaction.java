@@ -1,20 +1,32 @@
 package com.zoroark.hackathonasapcard.model;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
+
+@Entity
+@Table(name = "tb_transaction")
 public class Transaction {
 	
-	@Id // Primary Key
-	@GeneratedValue(strategy= GenerationType.IDENTITY) // Auto_Increment
-	private Long id;
+	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 	
 	@Id
 	@Column
@@ -28,12 +40,20 @@ public class Transaction {
 	@NotNull
 	@Column
 	private Double amount;
+	
+	@ManyToOne
+	@JsonIgnoreProperties("Transaction")
+	private Person person;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "transaction", cascade = CascadeType.REMOVE)
+	@JsonIgnoreProperties("Transaction")
+	private List<Installment> installment;
 
-	public Long getId() {
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 
@@ -59,6 +79,22 @@ public class Transaction {
 
 	public void setAmount(Double amount) {
 		this.amount = amount;
+	}
+
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+
+	public List<Installment> getInstallment() {
+		return installment;
+	}
+
+	public void setInstallment(List<Installment> installment) {
+		this.installment = installment;
 	} 
 	
 
