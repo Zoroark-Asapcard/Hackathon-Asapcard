@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.List;
-//import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,11 +39,6 @@ public class PersonController {
 				.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 	}
 
-	@PostMapping
-	public ResponseEntity<Person> post(@Valid @RequestBody Person person) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(personRepository.save(person));
-	}
-
 	@PutMapping("/{id}")
 	public ResponseEntity<Person> put(@PathVariable UUID id, @Valid @RequestBody Person updatedPerson) {
 		if (personRepository.exists(id)) {
@@ -53,6 +47,7 @@ public class PersonController {
 		}
 		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Person not found!", null);
 	}
+
 
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
@@ -64,38 +59,9 @@ public class PersonController {
 		}
 	}
 
-	// É necesário aplicar o relacionamento com tb_transaction
-	/*
-	 * @PostMapping("/processTransaction") public ResponseEntity<String>
-	 * processTransaction(@Valid @RequestBody TransactionRequest transactionRequest)
-	 * { // Verificar se a pessoa existe Optional<Person> optionalPerson =
-	 * personRepository.findByDocument(transactionRequest.getDocument());
-	 * 
-	 * if (optionalPerson.isPresent()) { // Pessoa existente, associar a transação
-	 * Person person = optionalPerson.get(); Transaction transaction = new
-	 * Transaction(); transaction.setAmount(transactionRequest.getAmount()); //
-	 * Outras informações da transação, se necessário
-	 * person.addTransaction(transaction);
-	 * 
-	 * // Atualizar o saldo ou fazer outras operações de transação, se necessário
-	 * processFinancialTransaction(person, transactionRequest.getAmount());
-	 * 
-	 * return ResponseEntity.status(HttpStatus.OK).
-	 * body("Transaction processed for existing person."); } else { // Criar uma
-	 * nova pessoa Person newPerson = new Person();
-	 * newPerson.setDocument(transactionRequest.getDocument()); // Outras
-	 * informações da pessoa, se necessário personRepository.save(newPerson);
-	 * 
-	 * // Criar a transação para a nova pessoa Transaction transaction = new
-	 * Transaction(); transaction.setAmount(transactionRequest.getAmount()); //
-	 * Outras informações da transação, se necessário
-	 * newPerson.addTransaction(transaction);
-	 * 
-	 * // Atualizar o saldo ou fazer outras operações de transação, se necessário
-	 * processFinancialTransaction(newPerson, transactionRequest.getAmount());
-	 * 
-	 * return ResponseEntity.status(HttpStatus.CREATED).
-	 * body("New person created and transaction processed."); } }
-	 * 
-	 */
+	@PostMapping
+	public ResponseEntity<Person> post(@Valid @RequestBody Person person) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(personRepository.save(person));
+	}
+	
 }
