@@ -37,9 +37,14 @@ public class TransactionController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Transaction> getById(@PathVariable Long id) {
-		return transactionRepository.findById(id).map(resposta -> ResponseEntity.ok(resposta))
-				.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+	public ResponseEntity<Transaction> getById(@PathVariable UUID id) {
+	    Optional<Transaction> transactionOptional = transactionRepository.findById(id);
+	    
+	    if (transactionOptional.isPresent()) {
+	        return ResponseEntity.ok(transactionOptional.get());
+	    } else {
+	        return ResponseEntity.notFound().build();
+	    }
 	}
 
 	@PostMapping("/create")
