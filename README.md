@@ -5,7 +5,11 @@
 
 ## Desafios:
 - Nível 1: Integração entre camadas
-  O Desafio consistiu em criar uma aplicação capaz de receber um input de um arquivo .csv e gerar um output no formato JSON, persistindo esses dados em um banco de dados relacional. Construímos a aplicação em maven com o framework Spring boot e o SGDB MYSQL para persistir os dados. 
+  O Desafio consistiu em criar uma aplicação capaz de receber um input de um arquivo .csv e gerar um output no formato JSON, persistindo esses dados em um banco de dados relacional. Construímos a aplicação em maven com o framework Spring boot e o SGDB MYSQL para persistir os dados.
+  
+  ![diagrama](https://i.imgur.com/FeXkJf8.png)
+
+
 - Nível 2: Evolução do negócio
   Esse desafio se baseou em validar os dados persistido a partir de um segundo arquivo .csv, conciliando os dados e criando a funcionalidade de status para validar os dados das transações.
 - Nível 3: Aplicação 24/7
