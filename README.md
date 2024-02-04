@@ -40,7 +40,39 @@
 - Java Springboot
 - SGDB MYSql
 - RabbitMQ
-- Docker 
+- Docker
+
+  
+## Rodando localmente
+
+Clone o projeto
+
+```bash
+  git clone https://github.com/Zoroark-Asapcard/Hackathon-Asapcard.git
+```
+
+Entre no diretório do projeto
+
+```bash
+  cd Hackathon-Asapcard
+```
+
+Executar com docker compose
+
+```bash
+- certifique-se de ter o Docker instalado;
+- abra o dashboard do Docker para ter acesso a porta do rabbitmq;
+- abra o prompt na pasta dockerfile e execute:
+
+docker-compose up
+
+-abra a porta do rabbitmq http://localhost:15672 e faça o login
+
+user: guest
+password: guest
+```
+
+Inicie a aplicação spring boot
 
 ## Feedback
 
