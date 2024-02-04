@@ -8,10 +8,14 @@ import java.nio.charset.StandardCharsets;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.rabbitmq.client.Channel;
 
 @SpringBootApplication
+@EnableJpaRepositories("com.zoroark.hackathonasapcard.repository")
+@EntityScan("com.zoroark.hackathonasapcard.model")
 public class HackathonasapcardApplication {
 	
 	private final static String QUEUE_NAME = "orders";

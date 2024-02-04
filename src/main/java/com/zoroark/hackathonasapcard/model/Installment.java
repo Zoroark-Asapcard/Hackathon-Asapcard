@@ -22,6 +22,7 @@ public class Installment {
 		this.id = id;
 		this.installmentNumber = installmentNumber;
 		this.value = value;
+		
 	}
 
 	public Installment() {	}
@@ -42,6 +43,11 @@ public class Installment {
 	@ManyToOne
 	@JsonIgnoreProperties("installment")
 	private Transaction transaction;
+	
+	public double setAmount(double installmentAmount) {
+		return installmentAmount;
+		
+	}
 
 	public UUID getId() {
 		return id;
@@ -74,7 +80,8 @@ public class Installment {
 	public void setTransaction(Transaction transaction) {
 		this.transaction = transaction;
 	}
-	 
+
+
 	
 }
 

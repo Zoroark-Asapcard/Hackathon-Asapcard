@@ -14,6 +14,5 @@ public interface InstallmentRepository extends JpaRepository<Installment, UUID> 
 
 	Optional<Installment> findById(UUID id);
 
-	
 
 }
