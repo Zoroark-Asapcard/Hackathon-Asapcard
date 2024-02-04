@@ -1,7 +1,6 @@
 package com.zoroark.hackathonasapcard.controller;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,7 +36,7 @@ public class PersonController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Person> getById(@PathVariable UUID id) {
+    public ResponseEntity<Person> getById(@PathVariable Long id) {
         return personRepository.findById(id).map(response -> ResponseEntity.ok(response))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
@@ -61,7 +60,7 @@ public class PersonController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Person> put(@PathVariable UUID id, @Valid @RequestBody Person updatedPerson) {
+    public ResponseEntity<Person> put(@PathVariable Long id, @Valid @RequestBody Person updatedPerson) {
         if (personRepository.existsById(id)) {
             updatedPerson.setId(id);
             return ResponseEntity.status(HttpStatus.OK).body(personRepository.save(updatedPerson));
@@ -71,7 +70,7 @@ public class PersonController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable UUID id) {
+    public void delete(@PathVariable Long id) {
         if (personRepository.existsById(id)) {
             personRepository.deleteById(id);
         } else {

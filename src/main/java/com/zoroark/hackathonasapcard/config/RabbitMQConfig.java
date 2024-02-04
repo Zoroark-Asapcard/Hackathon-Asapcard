@@ -9,9 +9,10 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
+import org.springframework.messaging.handler.annotation.support.DefaultMessageHandlerMethodFactory;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
+
 
 @Configuration
 public class RabbitMQConfig {
@@ -48,11 +49,17 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(ConnectionFactory connectionFactory) {
+    SimpleRabbitListenerContainerFactory jsonListenerContainerFactory(
+            ConnectionFactory connectionFactory) {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
         factory.setMessageConverter(jsonMessageConverter());
         return factory;
+    }
+    
+    @Bean
+    DefaultMessageHandlerMethodFactory handlerMethodFactory() {
+        return new DefaultMessageHandlerMethodFactory();
     }
 
     @Bean

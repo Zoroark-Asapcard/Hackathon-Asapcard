@@ -1,7 +1,6 @@
 package com.zoroark.hackathonasapcard.model;
 
 import java.util.List;
-import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -23,7 +22,7 @@ public class Person {
 
 	
 
-	public Person(UUID id, String name, int age) {
+	public Person(Long id, String name, int age) {
 		this.id = id;
 		this.name = name;
 		this.age = age;
@@ -32,9 +31,7 @@ public class Person {
 	public Person() {	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(columnDefinition = "varchar(36)")
-    private UUID id;
+    private Long id;
     
 	@NotBlank
     @Column(name = "name")
@@ -48,11 +45,11 @@ public class Person {
     @JsonIgnoreProperties("person")
     private List<Transaction> transactions;
 
-	public UUID getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(UUID id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

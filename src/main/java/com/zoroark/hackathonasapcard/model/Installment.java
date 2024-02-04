@@ -18,7 +18,7 @@ import jakarta.validation.constraints.NotBlank;
 
 public class Installment {
 
-	public Installment(UUID id, int installmentNumber, float value) {
+	public Installment(UUID id, int installmentNumber, double value) {
 		this.id = id;
 		this.installmentNumber = installmentNumber;
 		this.value = value;
@@ -37,7 +37,7 @@ public class Installment {
 
 	@Column(length = 1000)
 	@NotBlank(message = "The value attribute is mandatory")
-	private float value;
+	private double value;
 	
 	@ManyToOne
 	@JsonIgnoreProperties("installment")
@@ -59,11 +59,11 @@ public class Installment {
 		this.installmentNumber = installmentNumber;
 	}
 
-	public float getValue() {
+	public double getValue() {
 		return value;
 	}
 
-	public void setValue(float value) {
+	public void setValue(double value) {
 		this.value = value;
 	}
 

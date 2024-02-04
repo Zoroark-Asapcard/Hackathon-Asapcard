@@ -38,7 +38,7 @@ public class Transaction {
     private UUID id;
 	
 	@NotNull
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
 	private LocalDate transactionDate;
 	
 	@NotNull
