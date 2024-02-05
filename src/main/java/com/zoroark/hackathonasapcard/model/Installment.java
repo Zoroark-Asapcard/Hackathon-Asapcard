@@ -1,5 +1,4 @@
 package com.zoroark.hackathonasapcard.model;
-
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -10,44 +9,26 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "tb_installment")
-
 public class Installment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(columnDefinition = "varchar(36)")
+    private UUID id;
 
-	public Installment(UUID id, int installmentNumber, float value) {
-		this.id = id;
-		this.installmentNumber = installmentNumber;
-		this.value = value;
-		
-	}
+    @NotBlank(message = "The number of installments is mandatory.")
+    @Column(length = 1000)
+    private int installmentNumber;
 
-	public Installment() {	}
+    @NotBlank(message = "The value attribute is mandatory")
+    @Column(length = 1000)
+    private float value;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(columnDefinition = "varchar(36)")
-	private UUID id;
-
-	@Column(length = 1000)
-	@NotBlank(message = "The number of installments is mandatory.")
-	private int installmentNumber;
-
-	@Column(length = 1000)
-	@NotBlank(message = "The value attribute is mandatory")
-	private float value;
-	
-	@ManyToOne
-	@JsonIgnoreProperties("installment")
-	private Transaction transaction;
-	
-	public double setAmount(double installmentAmount) {
-		return installmentAmount;
-		
-	}
+    @ManyToOne
+    @JsonIgnoreProperties("installment")
+    private Transaction transaction;
 
 	public UUID getId() {
 		return id;
@@ -61,8 +42,8 @@ public class Installment {
 		return installmentNumber;
 	}
 
-	public void setInstallmentNumber(int installmentNumber) {
-		this.installmentNumber = installmentNumber;
+	public void setInstallmentNumber() {
+		this.installmentNumber;
 	}
 
 	public float getValue() {
@@ -81,7 +62,4 @@ public class Installment {
 		this.transaction = transaction;
 	}
 
-
-	
 }
-

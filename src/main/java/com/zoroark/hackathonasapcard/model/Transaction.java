@@ -16,41 +16,29 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
-
 @Entity
-@Table(name = "tb_transaction")
 public class Transaction {
-	
-	public Transaction(UUID id, LocalDate transactionDate, Double amount) {
-		this.id = id;
-		this.transactionDate = transactionDate;
-		this.amount = amount;
-	}
-
-	public Transaction() {	}
-
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(columnDefinition = "varchar(36)")
     private UUID id;
-	
-	@NotNull
-	@JsonFormat(pattern = "dd/MM/yyyy")
-	private LocalDate transactionDate;
-	
-	@NotNull
-	private Double amount;
-	
-	@ManyToOne
-	@JsonIgnoreProperties("Transaction")
-	private Person person;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "transaction", cascade = CascadeType.REMOVE)
-	@JsonIgnoreProperties("Transaction")
-	private List<Installment> installment;
+
+    @NotNull
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate transactionDate;
+
+    @NotNull
+    private Double amount;
+
+    @ManyToOne
+    @JsonIgnoreProperties("transactions")
+    private Person person;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "transaction", cascade = CascadeType.REMOVE)
+    @JsonIgnoreProperties("transaction")
+    private List<Installment> installments;
 
 	public UUID getId() {
 		return id;
@@ -84,13 +72,13 @@ public class Transaction {
 		this.person = person;
 	}
 
-	public List<Installment> getInstallment() {
-		return installment;
+	public List<Installment> getInstallments() {
+		return installments;
 	}
 
-	public void setInstallment(List<Installment> installment) {
-		this.installment = installment;
-	} 
-	
+	public void setInstallments(List<Installment> installments) {
+		this.installments = installments;
+	}
 
-}
+    
+  }

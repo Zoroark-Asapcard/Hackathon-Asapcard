@@ -13,34 +13,22 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "tb_person")
 public class Person {
-
-	
-
-	public Person(UUID id, String name, int age) {
-		this.id = id;
-		this.name = name;
-		this.age = age;
-	}
-
-	public Person() {	}
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(columnDefinition = "varchar(36)")
-    private UUID id;
+    @Id
     
-	@NotBlank
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(columnDefinition = "varchar(36)")
+    private UUID id;
+
+    @NotBlank
     @Column(name = "name")
     private String name;
 
-	@NotNull
+    @NotNull
     @Column(name = "age")
     private int age;
 
@@ -72,7 +60,6 @@ public class Person {
 		this.age = age;
 	}
 
-	
 	public List<Transaction> getTransactions() {
 		return transactions;
 	}
@@ -80,8 +67,6 @@ public class Person {
 	public void setTransactions(List<Transaction> transactions) {
 		this.transactions = transactions;
 	}
-	
 
+   
 }
-    
-

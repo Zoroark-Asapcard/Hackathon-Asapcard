@@ -8,13 +8,11 @@ import com.zoroark.hackathonasapcard.repository.InstallmentRepository;
 
 @Service
 public class InstallmentService {
-
     @Autowired
     private InstallmentRepository installmentRepository;
 
-    public void saveInstallment(Installment installment) {
-        installmentRepository.save(installment);
+    public Installment criarInstallment(Installment installment) {
+       
+        return installmentRepository.save(installment);
     }
-
-    // Outros métodos relacionados a parcelas, se necessário
 }

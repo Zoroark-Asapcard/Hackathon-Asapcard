@@ -2,45 +2,39 @@ package com.zoroark.hackathonasapcard.service;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zoroark.hackathonasapcard.model.DataFromRabbitMQ;
+import com.zoroark.hackathonasapcard.model.Installment;
+import com.zoroark.hackathonasapcard.model.Person;
+import com.zoroark.hackathonasapcard.model.Transaction;
 
-@Service
+@Component
 public class RabbitMQConsumer {
-	
-	/*@Autowired
-    private DataProcessingService dataProcessingService;
 
     @Autowired
-    private OrderService orderService;
+    private InstallmentService installmentService;
 
-    @RabbitListener(queues = "orders")
-    public void receiveMessage(Order order) {
-    	
-        // Manipular a mensagem recebida
-        orderService.saveOrder(order);
+    @Autowired
+    private PersonService personService;
+
+    @Autowired
+    private TransactionService transactionService;
+
+    @RabbitListener(queues = "installmentQueue")
+    public void processInstallmentMessage(Installment installment) {
+        System.out.println("Recebida mensagem do RabbitMQ para Installment: " + installment);
+        installmentService.criarInstallment(installment);
     }
-}*/
 
-@Autowired
-private DataProcessingService dataProcessingService;
-    
+    @RabbitListener(queues = "personQueue")
+    public void processPersonMessage(Person person) {
+        System.out.println("Recebida mensagem do RabbitMQ para Person: " + person);
+        personService.criarPerson(person);
+    }
 
-    @RabbitListener(queues = "orders")
-    public void receiveMessage(String message) {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            DataFromRabbitMQ data = objectMapper.readValue(message, DataFromRabbitMQ.class);
-
-            // Chame o serviço para processar os dados e persistir nas tabelas
-            dataProcessingService.processAndPersistData(data);
-        } catch (JsonProcessingException e) {
-            // Lide com erros de parsing do JSON
-            e.printStackTrace();
-        }
+    @RabbitListener(queues = "transactionQueue")
+    public void processTransactionMessage(Transaction transaction) {
+        System.out.println("Recebida mensagem do RabbitMQ para Transaction: " + transaction);
+        transactionService.criarTransaction(transaction);
     }
 }
-
