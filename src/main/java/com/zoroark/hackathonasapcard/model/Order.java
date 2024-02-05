@@ -1,4 +1,4 @@
-package com.zoroark.hackathonasapcard.model;
+/*package com.zoroark.hackathonasapcard.model;
 
 import java.util.UUID;
 
@@ -35,5 +35,4 @@ public class Order {
 	public void setOrderName(String orderName) {
 		this.orderName = orderName;
 	}
-
-}
+	*/
